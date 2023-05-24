@@ -14,8 +14,6 @@ public class StartScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.start_screen);
 
-        Log.i("console.log","로딩 화면 시작");
-
         // 3초 후 화면 전환
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -27,6 +25,6 @@ public class StartScreen extends AppCompatActivity {
                 finish();
                 Log.i("console.log","로딩 화면 종료");
             }
-        }, 1000);
+        }, 500);
     }
 }

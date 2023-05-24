@@ -17,11 +17,14 @@ public class myDBHelper extends SQLiteOpenHelper {
 
     public myDBHelper(Context context) {
         super(context, DB_NAME, null, 1);
-        Log.i("console.log","myDBHelper");
 
+
+        Log.i("console.log","myDBHelper 시작");
         DB_PATH = "/data/data/" + context.getPackageName() + "/databases/";
         this.mContext = context;
         dataBaseCheck();
+
+        Log.i("console.log","myDBHelper 종료");
     }
 
     private void dataBaseCheck() {

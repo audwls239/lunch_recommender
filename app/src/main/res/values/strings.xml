@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">lunch_recommender</string>
+    <string name="screenChange">화면 전환</string>
 </resources>
