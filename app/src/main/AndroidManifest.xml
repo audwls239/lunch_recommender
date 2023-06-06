@@ -24,6 +24,8 @@
         </activity>
         <activity android:name=".WheelScreen">
         </activity>
+        <activity android:name=".foodExplanation">
+        </activity>
     </application>
 
 </manifest>

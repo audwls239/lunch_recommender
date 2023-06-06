@@ -11,35 +11,21 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public class myDBHelper extends SQLiteOpenHelper {
-    private final static String DB_NAME = "menuList.db";
+    private static String DB_NAME = "";
     private static String DB_PATH = "";
     private Context mContext;
 
-    public myDBHelper(Context context) {
+    public myDBHelper(Context context, String DB_NAME) {
         super(context, DB_NAME, null, 1);
 
-
-        Log.i("console.log","myDBHelper 시작");
+//      경로 설정
         DB_PATH = "/data/data/" + context.getPackageName() + "/databases/";
+        this.DB_NAME = DB_NAME;
         this.mContext = context;
-        dataBaseCheck();
-
-        Log.i("console.log","myDBHelper 종료");
-    }
-
-    private void dataBaseCheck() {
-        Log.i("console.log","dataBaseCheck");
-
-        File dbFile = new File(DB_PATH + DB_NAME);
-        if (!dbFile.exists()) {
-            dbCopy();
-            Log.d("dbReader","DB 복사 완료.");
-        }
+        dbCopy();
     }
 
     private void dbCopy() {
-        Log.i("console.log","dbCopy");
-
         try {
             File folder = new File(DB_PATH);
             if (!folder.exists()) {
@@ -60,17 +46,14 @@ public class myDBHelper extends SQLiteOpenHelper {
 
         } catch (IOException e) {
             e.printStackTrace();
-            Log.d("dbCopy","IOException 발생함");
         }
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Log.i("dbReader", "onCreate()");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.i("dbReader", "onUpgrade()");
     }
 }
