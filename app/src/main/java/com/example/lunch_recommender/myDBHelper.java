@@ -3,7 +3,7 @@ package com.example.lunch_recommender;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -13,7 +13,7 @@ import java.io.OutputStream;
 public class myDBHelper extends SQLiteOpenHelper {
     private static String DB_NAME = "";
     private static String DB_PATH = "";
-    private Context mContext;
+    private final Context mContext;
 
     public myDBHelper(Context context, String DB_NAME) {
         super(context, DB_NAME, null, 1);

@@ -16,15 +16,12 @@ public class StartScreen extends AppCompatActivity {
 
         // 3초 후 화면 전환
         Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(StartScreen.this, MainActivity.class);
-                startActivity(intent);
+        handler.postDelayed(() -> {
+            Intent intent = new Intent(StartScreen.this, MainActivity.class);
+            startActivity(intent);
 
-                finish();
-                Log.i("console.log","로딩 화면 종료");
-            }
+            finish();
+            Log.i("console.log","로딩 화면 종료");
         }, 500);
     }
 }

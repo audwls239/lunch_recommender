@@ -22,7 +22,7 @@
         </activity>
         <activity android:name=".MainActivity">
         </activity>
-        <activity android:name=".WheelScreen">
+        <activity android:name=".slotMachineScreen">
         </activity>
         <activity android:name=".foodExplanation">
         </activity>

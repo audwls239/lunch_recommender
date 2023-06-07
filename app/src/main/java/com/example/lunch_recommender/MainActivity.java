@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -14,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    List<dbData> foodList = new ArrayList<dbData>();
+    static final List<String[]> foodList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,11 +25,10 @@ public class MainActivity extends AppCompatActivity {
         
 //      돌림판 화면 클릭 리스너 설정
         Button screenChangeBtn = (Button) findViewById(R.id.screenChangeBtn);
-        screenChangeBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, WheelScreen.class);
-                startActivity(intent);
-            }
+        screenChangeBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, slotMachineScreen.class);
+
+            startActivity(intent);
         });
     }
 
@@ -45,11 +43,12 @@ public class MainActivity extends AppCompatActivity {
 
         // 데이터 자료형으로 변환
         while (cursor.moveToNext()) {
-            dbData tmp = new dbData(
-                    cursor.getString(0),
-                    cursor.getString(1),
-                    cursor.getString(2),
-                    cursor.getString(3));
+            String[] tmp = new String[]{
+                cursor.getString(0),
+                cursor.getString(1),
+                cursor.getString(2),
+                cursor.getString(3)
+            };
             foodList.add(tmp);
         }
 
@@ -60,15 +59,13 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < foodList.size(); i++) {
             menuButton btn = new menuButton(this, foodList.get(i));
             btn.setText(btn.showName);
-            btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(MainActivity.this, foodExplanation.class);
+            btn.setOnClickListener(v -> {
+                Intent intent = new Intent(MainActivity.this, foodExplanation.class);
 
-                    intent.putExtra("name", btn.name);
-                    intent.putExtra("explain", btn.explain);
-                    startActivity(intent);
-                }
+                intent.putExtra("name", btn.name);
+                intent.putExtra("showName", btn.showName);
+                intent.putExtra("explain", btn.explain);
+                startActivity(intent);
             });
             listLayout.addView(btn);
         }
