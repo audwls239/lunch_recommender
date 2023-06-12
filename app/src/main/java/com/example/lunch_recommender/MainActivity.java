@@ -74,5 +74,17 @@ public class MainActivity extends AppCompatActivity {
         cursor.close();
         dbHelper.close();
     }
+    private int getImageResourceID(int index) {
+        int[] imageResources = {
+                R.drawable.food_list_chicken,
+                R.drawable.food_list_pizza,
+                R.drawable.food_list_hamburger,
+                R.drawable.food_list_sandwich,
+                R.drawable.food_list_jajangmyeon,
+                R.drawable.food_list_champon
+        };
+
+        return imageResources[index % imageResources.length];
+    }
 }
 

@@ -68,4 +68,18 @@ public class foodExplanation extends AppCompatActivity {
         cursor.close();
         dbHelper.close();
     }
+    private int getImageResourceID(int index) {
+        int[] imageResources = {
+                R.drawable.chicken_brand_bbq,
+                R.drawable.chicken_brand_bhc,
+                R.drawable.chicken_brand_kyo,
+                R.drawable.chicken_brand_goob,
+                R.drawable.chicken_brand_pura,
+                R.drawable.chicken_brand_no,
+                R.drawable.chicken_brand_nene,
+                R.drawable.chicken_brand_out,
+        };
+
+        return imageResources[index % imageResources.length];
+    }
 }
