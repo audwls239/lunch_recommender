@@ -48,9 +48,7 @@ public class foodExplanation extends AppCompatActivity {
         // 데이터 자료형으로 변환
         while (cursor.moveToNext()) {
             restaurantDB tmp = new restaurantDB(
-                    cursor.getString(0),
-                    cursor.getString(1),
-                    cursor.getString(2)
+                    cursor.getString(0)
             );
             restaurantList.add(tmp);
         }

@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 //      DB 호출
+        foodList.clear();
         getVal();
         
 //      돌림판 화면 클릭 리스너 설정

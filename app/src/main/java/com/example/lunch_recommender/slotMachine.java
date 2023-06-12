@@ -27,9 +27,9 @@ public class slotMachine extends LinearLayout {
         midText = new TextView(context);
         botText = new TextView(context);
 
-        topText.setText("섹스");
-        midText.setText("섹스");
-        botText.setText("섹스");
+        topText.setText("제작중");
+        midText.setText("제작중");
+        botText.setText("제작중");
 
         super.addView(this.topText);
         super.addView(this.midText);
