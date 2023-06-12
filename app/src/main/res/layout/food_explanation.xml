@@ -28,6 +28,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:textSize="25sp"
                     android:text="음식명"
                     tools:ignore="NestedWeights" />
 

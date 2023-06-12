@@ -3,7 +3,9 @@ package com.example.lunch_recommender;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -56,13 +58,37 @@ public class foodExplanation extends AppCompatActivity {
         LinearLayout listLayout = findViewById(R.id.linearLayout);
 
         for (int i = 0; i < restaurantList.size(); i++) {
+            // 리니어 레이아웃 생성 & 설정
+            LinearLayout itemLayout = new LinearLayout(this);
+            itemLayout.setOrientation(LinearLayout.HORIZONTAL);
+
+            LinearLayout.LayoutParams itemParams = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+            itemLayout.setLayoutParams(itemParams);
+
+            // 이미지 뷰 생성 & 설정
+            ImageView imageView = new ImageView(this);
+            LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(
+                    420, // Adjust the width and height as needed
+                    200
+            );
+            imageView.setLayoutParams(imageParams);
+            imageView.setImageResource(getImageResourceID(i)); // Set the image resource based on index
+            itemLayout.addView(imageView);
+
+            // 버튼 생성 & 설정
             Button btn = new Button(this);
-
+            btn.setLayoutParams(new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    1.0f
+            ));
             btn.setText(restaurantList.get(i).name);
-            btn.setOnClickListener(v -> {
+            itemLayout.addView(btn);
 
-            });
-            listLayout.addView(btn);
+            listLayout.addView(itemLayout);
         }
 
         cursor.close();

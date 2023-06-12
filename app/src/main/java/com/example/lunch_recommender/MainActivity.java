@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         getVal();
         
 //      돌림판 화면 클릭 리스너 설정
-        Button screenChangeBtn = (Button) findViewById(R.id.screenChangeBtn);
+        ImageButton screenChangeBtn = (ImageButton) findViewById(R.id.screenChangeBtn);
         screenChangeBtn.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, slotMachineScreen.class);
 
@@ -53,26 +55,57 @@ public class MainActivity extends AppCompatActivity {
             foodList.add(tmp);
         }
 
+        cursor.close();
+        dbHelper.close();
 
         // 데이터 개수 별로 메뉴 버튼 생성
         LinearLayout listLayout = findViewById(R.id.foodList);
+        int rowSize = 2; // 한 줄에 보여줄 이미지 버튼 개수
+        int rowCount = (int) Math.ceil((double) foodList.size() / rowSize); // 필요한 줄 수 계산
 
-        for (int i = 0; i < foodList.size(); i++) {
-            menuButton btn = new menuButton(this, foodList.get(i));
-            btn.setText(btn.showName);
-            btn.setOnClickListener(v -> {
-                Intent intent = new Intent(MainActivity.this, foodExplanation.class);
+        //
+        for (int i = 0; i < rowCount; i++) {
+            LinearLayout rowLayout = new LinearLayout(this);
+            rowLayout.setOrientation(LinearLayout.HORIZONTAL);
 
-                intent.putExtra("name", btn.name);
-                intent.putExtra("showName", btn.showName);
-                intent.putExtra("explain", btn.explain);
-                startActivity(intent);
-            });
-            listLayout.addView(btn);
+            LinearLayout.LayoutParams rowParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+            rowLayout.setLayoutParams(rowParams);
+
+            //
+            for (int j = 0; j < rowSize; j++) {
+                int index = i * rowSize + j;
+                if (index < foodList.size()) {
+                    String[] foodData = foodList.get(index);
+
+                    LinearLayout.LayoutParams btnParams = new LinearLayout.LayoutParams(
+                            0,
+                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                            1.0f
+                    );
+
+                    ImageButton btn = new ImageButton(this);
+                    btn.setImageResource(getImageResourceID(index)); // 이미지 리소스 ID를 설정
+                    btn.setLayoutParams(btnParams);
+                    btn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(MainActivity.this, foodExplanation.class);
+                            intent.putExtra("name", foodData[0]);
+                            intent.putExtra("showName", foodData[1]);
+                            intent.putExtra("explain", foodData[2]);
+                            startActivity(intent);
+                        }
+                    });
+
+                    rowLayout.addView(btn);
+                }
+            }
+
+            listLayout.addView(rowLayout);
         }
-
-        cursor.close();
-        dbHelper.close();
     }
     private int getImageResourceID(int index) {
         int[] imageResources = {
