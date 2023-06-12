@@ -1,8 +1,10 @@
 package com.example.lunch_recommender;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -48,9 +50,11 @@ public class foodExplanation extends AppCompatActivity {
         cursor = db.rawQuery("SELECT * FROM " + foodName + ";", null);
 
         // 데이터 자료형으로 변환
+        restaurantList.clear();
         while (cursor.moveToNext()) {
             restaurantDB tmp = new restaurantDB(
-                    cursor.getString(0)
+                    cursor.getString(0),
+                    cursor.getString(1)
             );
             restaurantList.add(tmp);
         }
@@ -75,7 +79,16 @@ public class foodExplanation extends AppCompatActivity {
                     200
             );
             imageView.setLayoutParams(imageParams);
-            imageView.setImageResource(getImageResourceID(i)); // Set the image resource based on index
+
+
+            String resourceName = foodName + "_brand_" + restaurantList.get(i).name;
+            int resourceID = getResources().getIdentifier(resourceName, "drawable", getApplication().getPackageName());
+
+            if (resourceID == 0) {
+                resourceID = R.drawable.check;
+            }
+            
+            imageView.setImageResource(resourceID);
             itemLayout.addView(imageView);
 
             // 버튼 생성 & 설정
@@ -85,7 +98,7 @@ public class foodExplanation extends AppCompatActivity {
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     1.0f
             ));
-            btn.setText(restaurantList.get(i).name);
+            btn.setText(restaurantList.get(i).showName);
             itemLayout.addView(btn);
 
             listLayout.addView(itemLayout);
@@ -93,19 +106,5 @@ public class foodExplanation extends AppCompatActivity {
 
         cursor.close();
         dbHelper.close();
-    }
-    private int getImageResourceID(int index) {
-        int[] imageResources = {
-                R.drawable.chicken_brand_bbq,
-                R.drawable.chicken_brand_bhc,
-                R.drawable.chicken_brand_kyo,
-                R.drawable.chicken_brand_goob,
-                R.drawable.chicken_brand_pura,
-                R.drawable.chicken_brand_no,
-                R.drawable.chicken_brand_nene,
-                R.drawable.chicken_brand_out,
-        };
-
-        return imageResources[index % imageResources.length];
     }
 }

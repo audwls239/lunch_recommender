@@ -89,15 +89,12 @@ public class MainActivity extends AppCompatActivity {
                     ImageButton btn = new ImageButton(this);
                     btn.setImageResource(getImageResourceID(index)); // 이미지 리소스 ID를 설정
                     btn.setLayoutParams(btnParams);
-                    btn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(MainActivity.this, foodExplanation.class);
-                            intent.putExtra("name", foodData[0]);
-                            intent.putExtra("showName", foodData[1]);
-                            intent.putExtra("explain", foodData[2]);
-                            startActivity(intent);
-                        }
+                    btn.setOnClickListener(v -> {
+                        Intent intent = new Intent(MainActivity.this, foodExplanation.class);
+                        intent.putExtra("name", foodData[0]);
+                        intent.putExtra("showName", foodData[1]);
+                        intent.putExtra("explain", foodData[3]);
+                        startActivity(intent);
                     });
 
                     rowLayout.addView(btn);
